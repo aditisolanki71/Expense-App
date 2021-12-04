@@ -1,0 +1,65 @@
+import './ExpenseForm.css'
+import React,{useState} from 'react'
+const ExpenseForm = () => {
+   const [expense,setExpense] = useState({
+      title: '',
+      amount: 0,
+      date: 0
+   })
+   const changeHandler = (e) => {
+      // setExpense({...expense,[e.target.name] : e.target.value})
+
+      //with this approach react will give gauranttee
+      setExpense((prevState) => {
+         return {
+            ...prevState,
+           [e.target.name] : e.target.value,
+         }
+      })
+   }
+   const handleSubmit = (e) => {
+      e.preventDefault();
+      console.log('expense is',expense)
+   }
+   const {title,amount,date} = expense; 
+   return (
+      <form onSubmit={handleSubmit}>
+         <div className="new-expense__controls">
+            <div className="new-expense__control">
+               <label>Title</label>
+               <input 
+                  type="text"
+                  name="title"
+                  value={title}
+                  onChange={changeHandler}
+                />
+            </div>
+            <div className="new-expense__control">
+               <label>Amount</label>
+               <input 
+                  type="number"
+                  min="0.01" 
+                  step="0.01"
+                  name="amount"
+                  value={amount}
+                  onChange={changeHandler}
+               />
+            </div>
+            <div className="new-expense__control">
+               <label>Date</label>
+               <input 
+                  type="date" 
+                  min="2019-01-01" 
+                  max="2022-12-31"
+                  name="date" 
+                  value={date}
+                  onChange={changeHandler}
+               />
+            </div>
+         </div>
+         <div className="new-expense__actions">
+            <button type="submit">Add Expense</button>
+         </div>
+      </form>
+   )}
+export default ExpenseForm;
